@@ -60,10 +60,10 @@ const sportsData = {
     location: 'Bogotá, Colombia'
   },
   items: [
-  { name: 'DryFit Performance T-Shirt', categoria: 't-shirt', precio: 65000 },
-  { name: 'Elite Training Shorts', categoria: 'shorts', precio: 55000 },
-  { name: 'AirSpeed Running Shoes', categoria: 'footwear', precio: 180000 },
-  { name: 'Waterproof Sports Jacket', categoria: 'jacket', precio: 120000 },
+  { name: 'camiseta', categoria: 'camisetas', precio: 65000 },
+  { name: 'pantaloneta', categoria: 'pantalonetas', precio: 55000 },
+  { name: 'zapatillas', categoria: 'calzado', precio: 180000 },
+  { name: 'chaqueta', categoria: 'chaquetas', precio: 120000 },
 ],
 
   links: [
