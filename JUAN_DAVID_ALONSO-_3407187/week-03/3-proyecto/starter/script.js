@@ -47,11 +47,11 @@
 class BaseItem {
   // TODO: Declara los campos privados de tu clase base
   // Estos son los campos mínimos requeridos:
-  // #id;
-  // #name;
-  // #active;
-  // #location;
-  // #dateCreated;
+     #id;
+     #name;
+     #active;
+     #location;
+     #dateCreated;
   //
   // EJEMPLO Planetario - campos adicionales específicos:
   // #magnitude;
@@ -64,11 +64,11 @@ class BaseItem {
    */
   constructor(name, location) {
     // TODO: Inicializa los campos privados
-    // this.#id = crypto.randomUUID();
-    // this.#name = name;
-    // this.#location = location;
-    // this.#active = true;
-    // this.#dateCreated = new Date().toISOString();
+       this.#id = crypto.randomUUID();
+       this.#name = name;
+       this.#location = location;
+       this.#active = true;
+       this.#dateCreated = new Date().toISOString();
   }
 
   // ============================================
@@ -78,38 +78,27 @@ class BaseItem {
   /**
    * Retorna el ID único del elemento
    */
-  get id() {
-    // TODO: Implementa el getter
-    // return this.#id;
-  }
+  get id() {return this.#id;}
 
   /**
    * Retorna el nombre del elemento
    */
-  get name() {
-    // TODO: Implementa el getter
-  }
+  get name() {return this.#name;}
 
   /**
    * Retorna si el elemento está activo
    */
-  get isActive() {
-    // TODO: Implementa el getter
-  }
+  get isActive() {return this.#active;}
 
   /**
    * Retorna la ubicación del elemento
    */
-  get location() {
-    // TODO: Implementa el getter
-  }
+  get location() {return this.#location;}
 
   /**
    * Retorna la fecha de creación
    */
-  get dateCreated() {
-    // TODO: Implementa el getter
-  }
+  get dateCreated() {return this.#dateCreated}
 
   // ============================================
   // SETTERS - Modificación controlada con validación
@@ -120,11 +109,10 @@ class BaseItem {
    * @param {string} value - Nueva ubicación
    */
   set location(value) {
-    // TODO: Implementa el setter con validación
-    // if (!value || value.trim() === '') {
-    //   throw new Error('La ubicación no puede estar vacía');
-    // }
-    // this.#location = value.trim();
+    if (!value || value.trim() === '') {
+       throw new Error('La ubicación no puede estar vacía');
+     }
+     this.#location = value.trim();
   }
 
   // ============================================
@@ -137,11 +125,11 @@ class BaseItem {
    */
   activate() {
     // TODO: Implementa la activación
-    // if (this.#active) {
-    //   return { success: false, message: 'El elemento ya está activo' };
-    // }
-    // this.#active = true;
-    // return { success: true, message: 'Elemento activado correctamente' };
+       if (this.#active) {
+       return { success: false, message: 'El elemento ya está activo' };
+     }
+     this.#active = true;
+     return { success: true, message: 'Elemento activado correctamente' };
   }
 
   /**
