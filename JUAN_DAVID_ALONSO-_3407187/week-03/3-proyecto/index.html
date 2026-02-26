@@ -64,6 +64,7 @@
                 placeholder="Buscar por nombre..."
               />
               <!-- TODO: Adapta los tipos a tu dominio -->
+               <label for="filter-type">Tipo de producto</label>
               <select id="filter-type">
                 <option value="all">Todos los tipos</option>
                 <!--
@@ -72,14 +73,16 @@
                   <option value="Star">Estrellas</option>
                   <option value="Satellite">Satélites</option>
                 -->
-                <option value="ItemType1">Tipo 1</option>
-                <option value="ItemType2">Tipo 2</option>
-                <option value="ItemType3">Tipo 3</option>
+                <option value="Camiseta">Camisetas</option>
+                <option value="Pantaloneta">Pantalonetas</option>
+                <option value="Zapatillas">Zapatillas</option>
+                <option value="Accesorio">Accesorios</option>
               </select>
-              <select id="filter-status">
+                <label for="filter-status">Estado</label>
+                <select id="filter-status">
                 <option value="all">Todos</option>
-                <option value="active">Activos</option>
-                <option value="inactive">Inactivos</option>
+                <option value="Disponible">Disponible</option>
+                <option value="Agotado">Agotado</option>
               </select>
               <button id="add-item-btn" class="btn btn-primary">
                 + Agregar
@@ -106,11 +109,13 @@
                 placeholder="Buscar usuario..."
               />
               <!-- TODO: Adapta los roles a tu dominio -->
-              <select id="filter-role">
-                <option value="all">Todos los roles</option>
-                <option value="UserRole1">Rol 1</option>
-                <option value="UserRole2">Rol 2</option>
-              </select>
+             <label for="filter-role">Rol</label>
+             <select id="filter-role">
+               <option value="all">Todos los roles</option>
+               <option value="Administrador">Administrador</option>
+               <option value="Vendedor">Vendedor</option>
+               <option value="Cliente">Cliente</option>
+             </select>
               <button id="add-user-btn" class="btn btn-primary">
                 + Agregar Usuario
               </button>
@@ -173,11 +178,11 @@
             <div class="form-group">
               <label for="item-type">Tipo de Elemento</label>
               <select id="item-type" required>
-                <!-- TODO: Adapta los tipos a tu dominio -->
-                <option value="">Selecciona un tipo</option>
-                <option value="ItemType1">Tipo 1</option>
-                <option value="ItemType2">Tipo 2</option>
-                <option value="ItemType3">Tipo 3</option>
+                 <option value="">Selecciona un tipo</option>
+                 <option value="Camiseta">Camisetas</option>
+                 <option value="Pantaloneta">Pantalonetas</option>
+                 <option value="Zapatillas">Zapatillas</option>
+                 <option value="Accesorio">Accesorios</option>
               </select>
             </div>
 
@@ -222,19 +227,28 @@
               <label for="user-role">Rol</label>
               <select id="user-role" required>
                 <option value="">Selecciona un rol</option>
-                <option value="UserRole1">Rol 1</option>
-                <option value="UserRole2">Rol 2</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Vendedor">Vendedor</option>
+                <option value="Cliente">Cliente</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="user-name">Nombre *</label>
-              <input type="text" id="user-name" required />
+             <label for="item-price">Precio *</label>
+             <input type="number" id="item-price" required />
             </div>
 
             <div class="form-group">
-              <label for="user-email">Email *</label>
-              <input type="email" id="user-email" required />
+             <label for="item-stock">Cantidad *</label>
+             <input type="number" id="item-stock" required />
+            </div>
+
+            <div class="form-group">
+              <label for="item-status">Estado</label>
+              <select id="item-status">
+              <option value="Disponible">Disponible</option>
+              <option value="Agotado">Agotado</option>
+              </select>
             </div>
 
             <div class="form-actions">
@@ -249,6 +263,6 @@
     </div>
 
     <!-- Script principal -->
-    <script src="starter/script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

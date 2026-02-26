@@ -138,6 +138,9 @@ class BaseItem {
    */
   deactivate() {
     // TODO: Implementa la desactivación
+     if (!this.#active) return { success:false,message:'Ya está inactivo'};
+    this.#active = false;
+    return { success:true,message:'Producto desactivado'};
   }
 
   /**
@@ -245,45 +248,45 @@ class BaseItem {
  */
 class Person {
   // TODO: Declara campos privados
-  // #id;
-  // #name;
-  // #email;
-  // #registrationDate;
+     #id;
+     #name;
+     #email;
+     #registrationDate;
 
   constructor(name, email) {
     // TODO: Inicializa los campos
-    // this.#id = crypto.randomUUID();
-    // this.#name = name;
-    // this.#email = email;
-    // this.#registrationDate = new Date().toISOString();
+       this.#id = crypto.randomUUID();
+       this.#name = name;
+       this.#email = email;
+       this.#registrationDate = new Date().toISOString();
   }
 
   // TODO: Implementa getters
-  get id() {}
-  get name() {}
-  get email() {}
-  get registrationDate() {}
+  get id() {return this.#id}
+  get name() {return this.#name}
+  get email() {return this.#email}
+  get registrationDate() {return this.#registrationDate}
 
   // TODO: Implementa setter con validación de email
   set email(value) {
     // Valida formato de email usando regex
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(value)) {
-    //   throw new Error('Formato de email inválido');
-    // }
-    // this.#email = value;
+       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+       if (!emailRegex.test(value)) {
+         throw new Error('Formato de email inválido');
+       }
+       this.#email = value;
   }
 
   /**
    * Retorna la información básica del usuario
    */
   getInfo() {
-    // return {
-    //   id: this.#id,
-    //   name: this.#name,
-    //   email: this.#email,
-    //   registrationDate: this.#registrationDate
-    // };
+       return {
+         id: this.#id,
+         name: this.#name,
+         email: this.#email,
+         registrationDate: this.#registrationDate
+       };
   }
 }
 
@@ -354,10 +357,10 @@ class MainSystem {
   // TODO: Implementa un static block para configuración
   static {
     // Este bloque se ejecuta cuando la clase se carga
-    // this.VERSION = '1.0.0';
-    // this.MAX_ITEMS = 1000;
-    // this.SYSTEM_NAME = 'Mi Sistema'; // Cambia por tu dominio
-    // console.log(`Sistema ${this.SYSTEM_NAME} v${this.VERSION} cargado`);
+       this.VERSION = '1.0.0';
+       this.MAX_ITEMS = 1000;
+       this.SYSTEM_NAME = 'Proactive Deportes'; // Cambia por tu dominio
+       console.log(`Sistema ${this.SYSTEM_NAME} v${this.VERSION} cargado`);
   }
 
   // TODO: Implementa métodos estáticos de utilidad
@@ -375,7 +378,7 @@ class MainSystem {
    * @returns {string} ID único
    */
   static generateId() {
-    // return crypto.randomUUID();
+       return crypto.randomUUID();
   }
 
   // ============================================
@@ -389,14 +392,14 @@ class MainSystem {
    */
   addItem(item) {
     // TODO: Implementa la adición con validación
-    // if (!(item instanceof BaseItem)) {
-    //   return { success: false, message: 'El item debe ser instancia de BaseItem' };
-    // }
-    // if (this.#items.length >= MainSystem.MAX_ITEMS) {
-    //   return { success: false, message: 'Límite de items alcanzado' };
-    // }
-    // this.#items.push(item);
-    // return { success: true, message: 'Item agregado correctamente', item };
+       if (!(item instanceof BaseItem)) {
+         return { success: false, message: 'El item debe ser instancia de BaseItem' };
+       }
+       if (this.#items.length >= MainSystem.MAX_ITEMS) {
+         return { success: false, message: 'Límite de items alcanzado' };
+       }
+       this.#items.push(item);
+       return { success: true, message: 'Item agregado correctamente', item };
   }
 
   /**
@@ -406,12 +409,12 @@ class MainSystem {
    */
   removeItem(id) {
     // TODO: Implementa la eliminación
-    // const index = this.#items.findIndex(item => item.id === id);
-    // if (index === -1) {
-    //   return { success: false, message: 'Item no encontrado' };
-    // }
-    // const removed = this.#items.splice(index, 1)[0];
-    // return { success: true, message: 'Item eliminado', item: removed };
+       const index = this.#items.findIndex(item => item.id === id);
+       if (index === -1) {
+         return { success: false, message: 'Item no encontrado' };
+       }
+       const removed = this.#items.splice(index, 1)[0];
+       return { success: true, message: 'Item eliminado', item: removed };
   }
 
   /**
@@ -421,7 +424,7 @@ class MainSystem {
    */
   findItem(id) {
     // TODO: Implementa la búsqueda
-    // return this.#items.find(item => item.id === id) ?? null;
+       return this.#items.find(item => item.id === id) ?? null;
   }
 
   /**
@@ -430,7 +433,7 @@ class MainSystem {
    */
   getAllItems() {
     // Retorna copia para evitar mutación directa
-    // return [...this.#items];
+       return [...this.#items];
   }
 
   // ============================================
@@ -444,10 +447,10 @@ class MainSystem {
    */
   searchByName(query) {
     // TODO: Implementa búsqueda case-insensitive
-    // const searchTerm = query.toLowerCase();
-    // return this.#items.filter(item =>
-    //   item.name.toLowerCase().includes(searchTerm)
-    // );
+       const searchTerm = query.toLowerCase();
+       return this.#items.filter(item =>
+         item.name.toLowerCase().includes(searchTerm)
+       );
   }
 
   /**
@@ -457,7 +460,7 @@ class MainSystem {
    */
   filterByType(type) {
     // TODO: Implementa el filtro por tipo
-    // return this.#items.filter(item => item.getType() === type);
+     return this.#items.filter(item => item.getType() === type);
   }
 
   /**
@@ -467,7 +470,7 @@ class MainSystem {
    */
   filterByStatus(active) {
     // TODO: Implementa el filtro por estado
-    // return this.#items.filter(item => item.isActive === active);
+       return this.#items.filter(item => item.isActive === active);
   }
 
   // ============================================
@@ -480,24 +483,24 @@ class MainSystem {
    */
   getStats() {
     // TODO: Implementa el cálculo de estadísticas usando reduce
-    // const total = this.#items.length;
-    // const active = this.#items.filter(item => item.isActive).length;
-    // const inactive = total - active;
+       const total = this.#items.length;
+       const active = this.#items.filter(item => item.isActive).length;
+       const inactive = total - active;
     //
     // // Contar por tipo usando reduce
-    // const byType = this.#items.reduce((acc, item) => {
-    //   const type = item.getType();
-    //   acc[type] = (acc[type] ?? 0) + 1;
-    //   return acc;
-    // }, {});
+       const byType = this.#items.reduce((acc, item) => {
+         const type = item.getType();
+         acc[type] = (acc[type] ?? 0) + 1;
+         return acc;
+       }, {});
     //
-    // return {
-    //   total,
-    //   active,
-    //   inactive,
-    //   byType,
-    //   users: this.#users.length
-    // };
+       return {
+         total,
+         active,
+         inactive,
+         byType,
+         users: this.#users.length
+       };
   }
 
   // ============================================
@@ -510,11 +513,11 @@ class MainSystem {
    */
   addUser(user) {
     // TODO: Implementa el registro de usuario
-    // if (!(user instanceof Person)) {
-    //   return { success: false, message: 'Debe ser instancia de Person' };
-    // }
-    // this.#users.push(user);
-    // return { success: true, message: 'Usuario registrado' };
+       if (!(user instanceof Person)) {
+         return { success: false, message: 'Debe ser instancia de Person' };
+       }
+       this.#users.push(user);
+       return { success: true, message: 'Usuario registrado' };
   }
 
   /**
@@ -523,11 +526,11 @@ class MainSystem {
    * @returns {Person|null} Usuario encontrado o null
    */
   findUserByEmail(email) {
-    // return this.#users.find(user => user.email === email) ?? null;
+       return this.#users.find(user => user.email === email) ?? null;
   }
 
   getAllUsers() {
-    // return [...this.#users];
+       return [...this.#users];
   }
 }
 
