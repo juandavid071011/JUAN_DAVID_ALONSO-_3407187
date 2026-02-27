@@ -1,7 +1,7 @@
 /**
- * ============================================
- * PROYECTO SEMANA 03 - SISTEMA DE GESTIÓN CON POO
- * Archivo inicial para el aprendiz
+ //* ============================================
+ //* PROYECTO SEMANA 03 - SISTEMA DE GESTIÓN CON POO
+ /* Archivo inicial para el aprendiz
  * ============================================
  *
  * INSTRUCCIONES:
@@ -49,8 +49,10 @@ class BaseItem {
   // Estos son los campos mínimos requeridos:
      #id;
      #name;
+     #brand;
+     #price;
+     #stock;
      #active;
-     #location;
      #dateCreated;
   //
   // EJEMPLO Planetario - campos adicionales específicos:
@@ -62,44 +64,41 @@ class BaseItem {
    * @param {string} name - Nombre del elemento
    * @param {string} location - Ubicación del elemento
    */
-  constructor(name, location) {
-    // TODO: Inicializa los campos privados
-       this.#id = crypto.randomUUID();
-       this.#name = name;
-       this.#location = location;
-       this.#active = true;
-       this.#dateCreated = new Date().toISOString();
+   constructor(name, brand, price, stock) {
+
+    if (!name || name.trim() === "")
+      throw new Error("El nombre no puede estar vacío");
+
+    if (!brand || brand.trim() === "")
+      throw new Error("La marca no puede estar vacía");
+
+    if (price <= 0)
+      throw new Error("El precio debe ser mayor que 0");
+
+    if (stock < 0)
+      throw new Error("El stock no puede ser negativo");
+
+    this.#id = crypto.randomUUID();
+    this.#name = name.trim();
+    this.#brand = brand.trim();
+    this.#price = Number(price);
+    this.#stock = Number(stock);
+    this.#active = true;
+    this.#dateCreated = new Date().toISOString();
   }
+
 
   // ============================================
   // GETTERS - Acceso controlado a propiedades
   // ============================================
 
-  /**
-   * Retorna el ID único del elemento
-   */
-  get id() {return this.#id;}
-
-  /**
-   * Retorna el nombre del elemento
-   */
-  get name() {return this.#name;}
-
-  /**
-   * Retorna si el elemento está activo
-   */
-  get isActive() {return this.#active;}
-
-  /**
-   * Retorna la ubicación del elemento
-   */
-  get location() {return this.#location;}
-
-  /**
-   * Retorna la fecha de creación
-   */
-  get dateCreated() {return this.#dateCreated}
-
+   get id() { return this.#id; }
+  get name() { return this.#name; }
+  get brand() { return this.#brand; }
+  get price() { return this.#price; }
+  get stock() { return this.#stock; }
+  get isActive() { return this.#active; }
+  get dateCreated() { return this.#dateCreated; }
   // ============================================
   // SETTERS - Modificación controlada con validación
   // ============================================
@@ -108,12 +107,12 @@ class BaseItem {
    * Establece la ubicación con validación
    * @param {string} value - Nueva ubicación
    */
-  set location(value) {
-    if (!value || value.trim() === '') {
-       throw new Error('La ubicación no puede estar vacía');
-     }
-     this.#location = value.trim();
+   set name(value) {
+    if (!value || value.trim() === "")
+      throw new Error("Nombre inválido");
+    this.#name = value.trim();
   }
+
 
   // ============================================
   // MÉTODOS DE INSTANCIA
@@ -204,38 +203,129 @@ class BaseItem {
  */
 
 // TODO: Implementa tu primera clase derivada (Tipo 1)
-// class ItemType1 extends BaseItem {
-//   #specificProp1;
-//   #specificProp2;
-//
-//   constructor(name, location, prop1, prop2) {
-//     super(name, location);
-//     this.#specificProp1 = prop1;
-//     this.#specificProp2 = prop2;
-//   }
-//
-//   // Getters
-//   get specificProp1() { return this.#specificProp1; }
-//   get specificProp2() { return this.#specificProp2; }
-//
-//   // Implementación de getInfo
-//   getInfo() {
-//     return {
-//       id: this.id,
-//       name: this.name,
-//       type: this.getType(),
-//       prop1: this.#specificProp1,
-//       prop2: this.#specificProp2,
-//       active: this.isActive
-//     };
-//   }
-// }
+   
+  class Camisetas extends BaseItem {
 
+  #size;
+  #color;
+
+  constructor(name, brand, price, stock, size, color) {
+    super(name, brand, price, stock);
+    this.#size = size;
+    this.#color = color;
+  }
+
+  get size() { return this.#size; }
+  get color() { return this.#color; }
+
+  getType() {
+    return "Camiseta";
+  }
+
+  getInfo() {
+    return {
+      id: this.id,
+      name: this.name,
+      brand: this.brand,
+      price: this.price,
+      stock: this.stock,
+      type: this.getType(),
+      size: this.#size,
+      color: this.#color,
+      active: this.isActive
+    };
+  }
+}
 // TODO: Implementa tu segunda clase derivada (Tipo 2)
 // class ItemType2 extends BaseItem { ... }
+class Zapatillas extends BaseItem {
+
+  #brand;
+  #price;
+  #stock;
+  #size;
+  #brandExtra;
+
+  constructor(name, brand, price, stock, size, brandExtra) {
+
+    super(name, brand, price, stock);   
+
+    this.#brand = brand;
+    this.#price = price;
+    this.#stock = stock;
+    this.#size = size;
+    this.#brandExtra = brandExtra;
+  }
+
+  // GETTERS
+  get brand() { return this.#brand; }
+  get price() { return this.#price; }
+  get stock() { return this.#stock; }
+  get size() { return this.#size; }
+  get brandExtra() { return this.#brandExtra; }
+
+  getType() {
+    return "Zapatillas";
+  }
+
+  getInfo() {
+    return {
+      id: this.id,
+      name: this.name,
+      brand: this.#brand,
+      price: this.#price,
+      stock: this.#stock,
+      type: this.getType(),
+      size: this.#size,
+      brandExtra: this.#brandExtra,
+      active: this.isActive
+    };
+  }
+}
+
 
 // TODO: Implementa tu tercera clase derivada (Tipo 3)
 // class ItemType3 extends BaseItem { ... }
+ class Accesorio extends BaseItem {
+
+  #brand;
+  #price;
+  #stock;
+  #category;
+
+  constructor(name, brand, price, stock, category) {
+
+    super(name, brand, price, stock);  
+
+    this.#brand = brand;
+    this.#price = price;
+    this.#stock = stock;
+    this.#category = category;
+  }
+
+  // GETTERS
+  get brand() { return this.#brand; }
+  get price() { return this.#price; }
+  get stock() { return this.#stock; }
+  get category() { return this.#category; }
+
+  getType() {
+    return "Accesorio";
+  }
+
+  getInfo() {
+    return {
+      id: this.id,
+      name: this.name,
+      brand: this.#brand,
+      price: this.#price,
+      stock: this.#stock,
+      type: this.getType(),
+      category: this.#category,
+      active: this.isActive
+    };
+  }
+}
 
 // ============================================
 // TODO 3: CLASE PERSON - Base para usuarios
@@ -334,10 +424,73 @@ class Person {
 
 // TODO: Implementa tu primer rol de usuario
 // class UserRole1 extends Person { ... }
+  class Cliente extends Person {
+  #membershipType;
+  #purchaseCount;
+
+  constructor(name, email, membershipType) {
+    super(name, email);
+    this.#membershipType = membershipType; // Gold, Silver, Normal
+    this.#purchaseCount = 0;
+  }
+
+  // Método para registrar una compra
+  registerPurchase() {
+    this.#purchaseCount++;
+  }
+
+  // Getters
+  get membershipType() { return this.#membershipType; }
+  get purchaseCount() { return this.#purchaseCount; }
+
+  // Sobrescribimos getInfo()
+  getInfo() {
+    return {
+      ...super.getInfo(),
+      role: "Cliente",
+      membershipType: this.#membershipType,
+      purchaseCount: this.#purchaseCount
+    };
+  }
+}
 
 // TODO: Implementa tu segundo rol de usuario
 // class UserRole2 extends Person { ... }
+class Vendedor extends Person {
+  #commissionRate;
+  #totalSales;
 
+  constructor(name, email, commissionRate) {
+    super(name, email);
+    this.#commissionRate = commissionRate; // Ej: 0.10 = 10%
+    this.#totalSales = 0;
+  }
+
+  // Registrar venta
+  registerSale(amount) {
+    if (amount > 0) {
+      this.#totalSales += amount;
+    }
+  }
+
+  // Calcular comisión
+  calculateCommission() {
+    return this.#totalSales * this.#commissionRate;
+  }
+
+  // Getters
+  get commissionRate() { return this.#commissionRate; }
+  get totalSales() { return this.#totalSales; }
+
+  getInfo() {
+    return {
+      ...super.getInfo(),
+      role: "Vendedor",
+      commissionRate: this.#commissionRate,
+      totalSales: this.#totalSales
+    };
+  }
+}
 // ============================================
 // TODO 5: CLASE PRINCIPAL DEL SISTEMA
 // ============================================
@@ -370,7 +523,7 @@ class MainSystem {
    * @returns {boolean} Si es válido
    */
   static isValidId(id) {
-    // return typeof id === 'string' && id.length > 0;
+       return typeof id === 'string' && id.length > 0;
   }
 
   /**
@@ -547,18 +700,44 @@ class MainSystem {
 // const sol = new Star('Sol', 'Centro del Sistema', 'enana amarilla', 4600);
 // system.addItem(jupiter);
 // system.addItem(sol);
+    
+const system = new MainSystem();
+
+
+
+const camiseta1 = new Camisetas("Camiseta Deportiva Nike","Nike",65000,20,"M","Negro");
+
+const camiseta2 = new Camisetas("Camiseta Entrenamiento Adidas","Adidas",70000,15,"L","Blanco");
+
+
+
+const zapatillas1 = new Zapatillas("Zapatillas Running Pegasus","Nike",250000,10,42,"Running");
+
+
+
+const accesorio1 = new Accesorio("Gorra Deportiva","Puma",40000,30,"Gorra");
+
+
+
+system.addItem(camiseta1);
+system.addItem(camiseta2);
+system.addItem(zapatillas1);
+system.addItem(accesorio1);
+
+console.log("✅ Datos de prueba cargados");
+
 
 // ============================================
 // TODO 7: REFERENCIAS AL DOM
 // ============================================
 
 // TODO: Obtén referencias a los elementos del DOM
-// const itemForm = document.getElementById('item-form');
-// const itemList = document.getElementById('item-list');
-// const statsContainer = document.getElementById('stats');
-// const filterType = document.getElementById('filter-type');
-// const filterStatus = document.getElementById('filter-status');
-// const searchInput = document.getElementById('search-input');
+   const itemForm = document.getElementById('item-form');
+   const itemList = document.getElementById('item-list');
+   const statsContainer = document.getElementById('stats-container');
+   const filterType = document.getElementById('filter-type');
+   const filterStatus = document.getElementById('filter-status');
+   const searchInput = document.getElementById('search-input');
 
 // ============================================
 // TODO 8: FUNCIONES DE RENDERIZADO
@@ -570,26 +749,36 @@ class MainSystem {
  * @returns {string} HTML del elemento
  */
 const renderItem = item => {
-  // TODO: Implementa usando template literals
-  // const info = item.getInfo();
-  // return `
-  //   <div class="item ${item.isActive ? '' : 'inactive'}" data-id="${item.id}">
-  //     <div class="item-header">
-  //       <h3>${item.name}</h3>
-  //       <span class="badge">${item.getType()}</span>
-  //     </div>
-  //     <div class="item-details">
-  //       <p>Ubicación: ${item.location}</p>
-  //       <p>Estado: ${item.isActive ? 'Activo' : 'Inactivo'}</p>
-  //     </div>
-  //     <div class="item-actions">
-  //       <button class="btn-toggle" data-id="${item.id}">
-  //         ${item.isActive ? 'Desactivar' : 'Activar'}
-  //       </button>
-  //       <button class="btn-delete" data-id="${item.id}">Eliminar</button>
-  //     </div>
-  //   </div>
-  // `;
+
+  const info = item.getInfo(); // ← info viene de la clase hija
+
+  return `
+    <div class="item ${item.isActive ? '' : 'inactive'}" data-id="${item.id}">
+      
+      <div class="item-header">
+        <h3>${item.name}</h3>
+        <span class="badge">${item.getType()}</span>
+      </div>
+
+      <div class="item-details">
+        <p><b>Marca:</b> ${info.brand}</p>
+        <p><b>Precio:</b> $${info.price}</p>
+        <p><b>Stock:</b> ${info.stock}</p>
+        <p><b>Estado:</b> ${item.isActive ? 'Disponible' : 'Agotado'}</p>
+      </div>
+
+      <div class="item-actions">
+        <button class="btn-toggle" data-id="${item.id}">
+          ${item.isActive ? 'Desactivar' : 'Activar'}
+        </button>
+
+        <button class="btn-delete" data-id="${item.id}">
+          Eliminar
+        </button>
+      </div>
+
+    </div>
+  `;
 };
 
 /**
@@ -597,12 +786,24 @@ const renderItem = item => {
  * @param {Array} items - Array de elementos
  */
 const renderItems = (items = []) => {
-  // TODO: Implementa el renderizado de la lista
-  // if (items.length === 0) {
-  //   itemList.innerHTML = '<p class="empty">No hay elementos</p>';
-  //   return;
-  // }
-  // itemList.innerHTML = items.map(renderItem).join('');
+
+  const itemList = document.getElementById("item-list");
+  const emptyState = document.getElementById("empty-state");
+
+  //  Si no hay elementos
+  if (!items || items.length === 0) {
+    itemList.innerHTML = "";
+    emptyState.style.display = "block";
+    return;
+  }
+
+  //  Mostrar lista
+  emptyState.style.display = "none";
+  itemList.innerHTML = items.map(renderItem).join("");
+
+  //  Activar botones con event delegation
+  itemList.removeEventListener("click", handleItemAction);
+  itemList.addEventListener("click", handleItemAction);
 };
 
 /**
@@ -611,11 +812,11 @@ const renderItems = (items = []) => {
  */
 const renderStats = stats => {
   // TODO: Implementa el renderizado de estadísticas
-  // statsContainer.innerHTML = `
-  //   <div class="stat">Total: ${stats.total}</div>
-  //   <div class="stat">Activos: ${stats.active}</div>
-  //   <div class="stat">Inactivos: ${stats.inactive}</div>
-  // `;
+     statsContainer.innerHTML = `
+       <div class="stat">Total: ${stats.total}</div>
+       <div class="stat">Activos: ${stats.active}</div>
+       <div class="stat">Inactivos: ${stats.inactive}</div>
+     `;
 };
 
 // ============================================
@@ -626,47 +827,110 @@ const renderStats = stats => {
  * Maneja el envío del formulario
  */
 const handleFormSubmit = e => {
-  // TODO: Implementa la creación de nuevos elementos
-  // e.preventDefault();
-  // Obtén valores del formulario
-  // Crea instancia de la clase correcta según el tipo seleccionado
-  // Agrega al sistema
-  // Re-renderiza
+  e.preventDefault();
+
+  // Obtener valores correctos del HTML
+  const name = document.getElementById("item-name").value;
+  const brand = document.getElementById("item-brand").value;
+  const price = Number(document.getElementById("item-price").value);
+  const stock = Number(document.getElementById("item-stock").value);
+  const type = document.getElementById("item-type").value;
+
+  // Campos dinámicos (si existen)
+  const sizeInput = document.getElementById("item-size");
+  const colorInput = document.getElementById("item-color");
+  const categoryInput = document.getElementById("item-category");
+
+  let item;
+
+  if (type === "Camiseta") {
+    const size = sizeInput ? sizeInput.value : "M";
+    const color = colorInput ? colorInput.value : "Negro";
+
+    item = new Camisetas(name, brand, price, stock, size, color);
+  }
+
+  if (type === "Zapatillas") {
+    const size = sizeInput ? sizeInput.value : 40;
+
+    item = new Zapatillas(name, brand, price, stock, size, "Running");
+  }
+
+  if (type === "Accesorio") {
+    const category = categoryInput ? categoryInput.value : "General";
+
+    item = new Accesorio(name, brand, price, stock, category);
+  }
+
+  // Agregar al sistema
+  system.addItem(item);
+
+  // Re-render
+  renderItems(system.getAllItems());
+  renderStats(system.getStats());
+
+  e.target.reset();
 };
 
 /**
  * Maneja cambios en los filtros
  */
 const handleFilterChange = () => {
-  // TODO: Implementa el filtrado
-  // let filtered = system.getAllItems();
-  // Aplica filtros según los valores de los selectores
-  // renderItems(filtered);
+  let filtered = system.getAllItems();
+
+  const type = document.getElementById("filter-type").value;
+  const status = document.getElementById("filter-status").value; // ✅ AGREGADO
+  const search = document.getElementById("search-input").value.toLowerCase();
+
+  // Filtro por tipo
+  if (type !== "all") {
+    filtered = filtered.filter(item => item.getType() === type);
+  }
+
+  // ✅ Filtro por estado
+  if (status !== "all") {
+    filtered = filtered.filter(item => item.status === status);
+  }
+
+  // Filtro por búsqueda
+  if (search) {
+    filtered = filtered.filter(item =>
+      item.name.toLowerCase().includes(search)
+    );
+  }
+
+  renderItems(filtered);
 };
 
 /**
  * Maneja acciones en los elementos (toggle, delete)
  */
-const handleItemAction = e => {
-  // TODO: Implementa usando event delegation
-  // const target = e.target;
-  // const itemId = target.dataset.id;
-  // if (!itemId) return;
-  //
-  // if (target.classList.contains('btn-toggle')) {
-  //   const item = system.findItem(itemId);
-  //   if (item.isActive) item.deactivate();
-  //   else item.activate();
-  // }
-  //
-  // if (target.classList.contains('btn-delete')) {
-  //   if (confirm('¿Eliminar este elemento?')) {
-  //     system.removeItem(itemId);
-  //   }
-  // }
-  //
-  // handleFilterChange();
-  // renderStats(system.getStats());
+const handleItemAction = (e) => {
+
+  const target = e.target;
+  const itemId = target.dataset.id;
+
+  if (!itemId) return;
+
+  const item = system.findItem(itemId);
+  if (!item) return;
+
+  //  Activar / Desactivar
+  if (target.classList.contains("btn-toggle")) {
+    item.isActive ? item.deactivate() : item.activate();
+  }
+
+  //  Eliminar
+  if (target.classList.contains("btn-delete")) {
+    const confirmar = confirm("¿Eliminar este elemento?");
+    if (confirmar) system.removeItem(itemId);
+  }
+
+  //  Aplicar filtros después de cambios
+  handleFilterChange();
+
+  //  Actualizar estadísticas
+  renderStats(system.getStats());
 };
 
 // ============================================
@@ -674,11 +938,11 @@ const handleItemAction = e => {
 // ============================================
 
 // TODO: Adjunta los event listeners
-// itemForm.addEventListener('submit', handleFormSubmit);
-// filterType.addEventListener('change', handleFilterChange);
-// filterStatus.addEventListener('change', handleFilterChange);
-// searchInput.addEventListener('input', handleFilterChange);
-// itemList.addEventListener('click', handleItemAction);
+   itemForm.addEventListener('submit', handleFormSubmit);
+   filterType.addEventListener('change', handleFilterChange);
+   filterStatus.addEventListener('change', handleFilterChange);
+   searchInput.addEventListener('input', handleFilterChange);
+   itemList.addEventListener('click', handleItemAction);
 
 // ============================================
 // TODO 11: INICIALIZACIÓN
@@ -687,15 +951,32 @@ const handleItemAction = e => {
 /**
  * Inicializa la aplicación
  */
+// ============================================
+// TODO 11: INICIALIZACIÓN
+// ============================================
+
 const init = () => {
-  // TODO: Implementa la inicialización
-  // renderItems(system.getAllItems());
-  // renderStats(system.getStats());
-  // console.log('✅ Sistema inicializado correctamente');
+
+  // 👉 Mostrar datos al iniciar
+  renderItems(system.getAllItems());
+  renderStats(system.getStats());
+
+  // 👉 Eventos de filtros
+  document.getElementById("filter-type")
+    ?.addEventListener("change", handleFilterChange);
+
+  document.getElementById("filter-status")
+    ?.addEventListener("change", handleFilterChange);
+
+  document.getElementById("search-input")
+    ?.addEventListener("input", handleFilterChange);
+
+  console.log("✅ Sistema inicializado correctamente");
 };
 
 // Ejecutar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener("DOMContentLoaded", init);
+
 
 // ============================================
 // CHECKLIST DE VERIFICACIÓN
