@@ -240,9 +240,7 @@ class BaseItem {
 // class ItemType2 extends BaseItem { ... }
 class Zapatillas extends BaseItem {
 
-  #brand;
-  #price;
-  #stock;
+  
   #size;
   #brandExtra;
 
@@ -250,17 +248,12 @@ class Zapatillas extends BaseItem {
 
     super(name, brand, price, stock);   
 
-    this.#brand = brand;
-    this.#price = price;
-    this.#stock = stock;
     this.#size = size;
     this.#brandExtra = brandExtra;
   }
 
   // GETTERS
-  get brand() { return this.#brand; }
-  get price() { return this.#price; }
-  get stock() { return this.#stock; }
+  
   get size() { return this.#size; }
   get brandExtra() { return this.#brandExtra; }
 
@@ -272,9 +265,9 @@ class Zapatillas extends BaseItem {
     return {
       id: this.id,
       name: this.name,
-      brand: this.#brand,
-      price: this.#price,
-      stock: this.#stock,
+      brand: this.brand,
+      price: this.price,
+      stock: this.stock,
       type: this.getType(),
       size: this.#size,
       brandExtra: this.#brandExtra,
@@ -889,7 +882,9 @@ const handleFilterChange = () => {
 
   // ✅ Filtro por estado
   if (status !== "all") {
-    filtered = filtered.filter(item => item.status === status);
+    filtered = filtered.filter(item =>
+  status === "active" ? item.isActive : !item.isActive
+);
   }
 
   // Filtro por búsqueda
